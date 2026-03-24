@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend
+    container_name: smart-todo-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=file:./dev.db
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./backend:/app
+    command: sh -c "yarn prisma migrate deploy && yarn start:dev"
