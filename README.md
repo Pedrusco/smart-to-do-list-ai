@@ -6,6 +6,13 @@ Built with **Next.js, NestJS, Prisma, and Docker**, this project allows users to
 
 ---
 
+## 📸 Preview
+
+<img width="1922" height="963" alt="image" src="https://github.com/user-attachments/assets/7e9224e3-4436-4cb3-984d-756cc306d9c2" />
+
+
+---
+
 ## ✨ Features
 
 - ✅ Create, complete, and delete tasks
