@@ -11,6 +11,6 @@ export class AiController {
   @ApiBody({ type: GenerateAiDto })
   @Post('generate')
   async generate(@Body() body: GenerateAiDto) {
-    return this.aiService.generateTasks(body.prompt);
+    return this.aiService.generateTasks(body.prompt, body.apiKey);
   }
 }

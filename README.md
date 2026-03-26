@@ -1,165 +1,190 @@
-# 🧠 Smart To-Do List API
+# 🚀 Smart To-Do List
 
-An AI-powered task management API built with **NestJS**, **Prisma**, and **OpenAI**.
+A modern full-stack to-do list application with AI-powered task generation.
+
+Built with **Next.js, NestJS, Prisma, and Docker**, this project allows users to manage tasks manually or generate them intelligently using AI.
 
 ---
 
-## 🚀 Features
+## ✨ Features
 
-- ✅ Create, list, update, and delete tasks (CRUD)
-- 🤖 AI-powered task generation
+- ✅ Create, complete, and delete tasks
+- 🤖 Generate tasks using AI (OpenAI)
 - 🧩 Modular architecture with NestJS
-- 📄 API documentation with Swagger
-- 🛡️ Input validation using DTOs
+- 📄 API documentation with Swagger (`http://localhost:3001/api`)
 - 🧪 Unit tests (Jest)
-- 🐳 Dockerized environment
+- 🔐 Optional API key input (local or environment-based)
+- 🎨 Modern UI with smooth interactions
+- 📦 Fully dockerized (run everything with one command)
+- 💾 Persistent storage using Prisma + SQLite
 
 ---
 
-## 🛠️ Tech Stack
+## 🧠 AI Integration
 
-- **Backend:** NestJS
-- **Database:** SQLite (via Prisma ORM)
-- **AI Integration:** OpenAI API
-- **Validation:** class-validator
-- **Documentation:** Swagger
-- **Testing:** Jest
-- **Containerization:** Docker + Docker Compose
+Users can describe a goal like:
+
+> "Plan a trip to Japan"
+
+And the app will generate structured actionable tasks automatically.
 
 ---
 
-## 📦 Project Structure
+## 🏗️ Tech Stack
+
+### Frontend
+
+- Next.js 16
+- React
+- TailwindCSS
+
+### Backend
+
+- NestJS
+- Prisma ORM
+- SQLite
+
+### DevOps
+
+- Docker & Docker Compose
+
+---
+
+## 📁 Project Structure
 
 ```
-backend/
-  src/
-    tasks/
-    prisma/
-    ai/
-  prisma/
-    schema.prisma
-    migrations/
+smart-to-do-list/
+│
+├── backend/
+│   ├── src/
+│   ├── prisma/
+│   ├── .env
+│   └── Dockerfile
+│
+├── frontend/
+│   ├── app/
+│   ├── services/
+│   ├── .env.local
+│   └── Dockerfile
+│
+├── docker-compose.yml
+└── README.md
 ```
 
 ---
 
-## ⚙️ Setup & Run
+## ⚙️ Environment Variables
 
-### 🔧 1. Clone the repository
+### Backend (`backend/.env`)
 
 ```
-git clone <your-repo-url>
+DATABASE_URL="file:./dev.db"
+OPENAI_API_KEY=your_api_key_here
+FRONTEND_URL=http://localhost:3000
+```
+
+### Frontend (`frontend/.env.local`)
+
+```
+NEXT_PUBLIC_API_URL=http://localhost:3001
+```
+
+---
+
+## 🐳 Running with Docker (Recommended)
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/smart-to-do-list.git
 cd smart-to-do-list
 ```
 
 ---
 
-### 🐳 2. Run with Docker
+### 2. Configure environment variables
+
+Create:
 
 ```
+backend/.env
+frontend/.env.local
+```
+
+---
+
+### 3. Run the application
+
+```bash
 docker-compose up --build
 ```
 
 ---
 
-### 🌐 API will be available at:
+### 4. Access the app
 
-```
-http://localhost:3000
-```
-
-### 📄 Swagger docs:
-
-```
-http://localhost:3000/api
-```
+- Frontend: http://localhost:3000
+- Backend: http://localhost:3001
 
 ---
 
-## 🧠 AI Endpoint
+## 💻 Running without Docker
 
-### POST `/ai/generate`
+### Backend
 
-Generates tasks from a given prompt using OpenAI.
-
-### Example request:
-
-```json
-{
-  "prompt": "Plan a trip to Japan"
-}
-```
-
----
-
-## 📌 Notes
-
-- The database is automatically created using Prisma migrations.
-- No manual database setup is required.
-- AI responses are validated and parsed safely before being stored.
-
----
-
-## 🔐 Environment Variables
-
-The project uses two `.env` files:
-
-### 1. Backend environment (`/backend/.env`)
-
-Used by NestJS and Prisma:
-
-```env
-DATABASE_URL="file:./dev.db"
-OPENAI_API_KEY=your_api_key_here
-```
-
----
-
-### 2. Root environment (`/.env`)
-
-Used by Docker Compose:
-
-```env
-OPENAI_API_KEY=your_api_key_here
-```
-
----
-
-⚠️ Notes:
-
-- Do not commit `.env` files to version control.
-- Both files are required when running the project with Docker.
-
----
-
-## 🧪 Running Tests
-
-```
+```bash
 cd backend
-yarn test
+yarn install
+yarn prisma migrate dev
+yarn start:dev
 ```
 
 ---
 
-## 🧠 Design Decisions
+### Frontend
 
-- SQLite was chosen for simplicity and portability.
-- Prisma ensures type safety and easy migrations.
-- Migrations are executed on container startup to guarantee reproducibility.
-- AI responses are validated to handle non-deterministic outputs.
+```bash
+cd frontend
+yarn install
+yarn dev
+```
+
+---
+
+## 🧪 Testing AI Behavior
+
+| Scenario        | Expected Behavior |
+| --------------- | ----------------- |
+| No API key      | Error message     |
+| Invalid API key | OpenAI error      |
+| Valid API key   | Tasks generated   |
+
+---
+
+## 🎯 Key Decisions
+
+- API key can be provided via UI or environment
+- Backend handles all AI logic securely
+- Frontend remains stateless regarding AI provider
+- Docker used to simplify full-stack setup
 
 ---
 
 ## 🚀 Future Improvements
 
-- Frontend (Next.js)
+- Toast notifications (instead of alerts)
 - Authentication
-- PostgreSQL with Docker
-- Rate limiting
-- Better AI prompt engineering
+- Deploy (Vercel + Railway)
+- Better AI prompt customization
 
 ---
 
 ## 👨‍💻 Author
 
 Pedro Fernandes
+
+---
+
+## 📄 License
+
+MIT

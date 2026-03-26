@@ -13,11 +13,8 @@ RUN yarn install
 # Copy the rest of the application code
 COPY . .
 
-# Build the NestJS application
-RUN yarn build
-
 # Expose application port
 EXPOSE 3000
 
-# Start the application in production mode
-CMD ["sh", "-c", "yarn prisma migrate deploy && yarn start:prod"]
+# Start the application
+CMD [ "yarn", "dev", "-H", "0.0.0.0" ]

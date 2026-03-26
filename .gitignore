@@ -1,12 +1,16 @@
 # env
 .env
+.env.local
 backend/.env
+frontend/.env.local
 
 # node
 node_modules
+frontend/node_modules
 backend/node_modules
 
 # build
+.next
 dist
 backend/dist
 
@@ -27,6 +31,8 @@ yarn-error.log*
 # Prisma
 backend/dev.db
 backend/dev.db-journal
+backend/prisma/dev.db
 
 # misc
+.DS_Store
 coverage

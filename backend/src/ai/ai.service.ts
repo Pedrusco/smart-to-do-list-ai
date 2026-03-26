@@ -7,13 +7,39 @@ import type { AITask } from './types/ai-task-type';
 export class AiService {
   constructor(private prisma: PrismaService) {}
 
-  private openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
+  private getErrorMessage(error: unknown): string {
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'error' in error &&
+      typeof error.error === 'object' &&
+      error.error !== null &&
+      'message' in error.error &&
+      typeof error.error.message === 'string'
+    ) {
+      return error.error.message;
+    }
 
-  async generateTasks(prompt: string): Promise<AITask[]> {
+    if (error instanceof Error) {
+      return error.message;
+    }
+
+    return 'AI generation failed';
+  }
+
+  async generateTasks(prompt: string, apiKey?: string): Promise<AITask[]> {
     try {
-      const response = await this.openai.chat.completions.create({
+      if (!apiKey && !process.env.OPENAI_API_KEY) {
+        throw new InternalServerErrorException(
+          'You must provide an Open API key',
+        );
+      }
+
+      const openai = new OpenAI({
+        apiKey: apiKey || process.env.OPENAI_API_KEY,
+      });
+
+      const response = await openai.chat.completions.create({
         model: 'gpt-4o-mini',
         messages: [
           {
@@ -68,9 +94,10 @@ export class AiService {
       );
 
       return createdTasks;
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
-      throw new InternalServerErrorException('AI generation failed');
+
+      throw new InternalServerErrorException(this.getErrorMessage(error));
     }
   }
 }
