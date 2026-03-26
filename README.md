@@ -172,7 +172,6 @@ yarn dev
 
 ## 🚀 Future Improvements
 
-- Toast notifications (instead of alerts)
 - Authentication
 - Deploy (Vercel + Railway)
 - Better AI prompt customization
